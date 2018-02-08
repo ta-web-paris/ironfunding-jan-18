@@ -1,11 +1,15 @@
 const express = require('express');
+const moment = require('moment');
 const router = express.Router();
 const Campaign = require('../models/campaign');
 const TYPES = require('../config/campaign-types');
 const { ensureLoggedIn } = require('connect-ensure-login');
 
 router.get('/', ensureLoggedIn(), (req, res, next) => {
-  res.render('campaigns/index');
+  Campaign.find({}, (err, campaigns) => {
+    if (err) return next(err)
+    res.render('campaigns/index', { campaigns, moment });
+  })
 });
 
 router.get('/new', ensureLoggedIn(), (req, res, next) => {
@@ -37,6 +41,15 @@ router.post('/', ensureLoggedIn(), (req, res, next) => {
 
     res.redirect('/campaigns/' + newCampaign._id);
   });
+});
+
+router.get('/:id', (req, res, next) => {
+  Campaign.findById(req.params.id)
+    .populate('creator')
+    .exec((err, campaign) => {
+      if (err) return next(err);
+      res.render('campaigns/show', { campaign, moment });
+    });
 });
 
 module.exports = router;
