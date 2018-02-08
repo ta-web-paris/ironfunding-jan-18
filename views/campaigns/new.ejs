@@ -1,0 +1,39 @@
+<form method="POST" action="/campaigns">
+  <div class="form-group">
+    <label for="campaign-title">Title</label>
+    <input id="campaign-title" type="text" class="form-control" placeholder="Title" name="title">
+  </div>
+
+  <div class="form-group">
+    <label for="campaign-description">Description</label>
+    <textarea name="description" class="form-control" id="campaign-description" rows="3"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="campaign-category">Example multiple select</label>
+    <select class="form-control" name="category" id="campaign-category">
+      <% categories.forEach(category => { %>
+        <option>
+          <%= category %>
+        </option>
+        <% }) %>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="campaign-goal">Goal</label>
+    <div class="input-group">
+      <input id="campaign-goal" type="number" name="goal" class="form-control" aria-label="Amount (to the nearest EURO)">
+      <div class="input-group-append">
+        <span class="input-group-text">€</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="campaign-deadline">Deadline</label>
+    <input id="campaign-deadline" type="date" class="form-control" name="deadline">
+  </div>
+
+  <button type="submit" class="btn btn-success">Create my Campaign</button>
+</form>
